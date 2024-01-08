@@ -10,6 +10,7 @@ export default function Works() {
 			<WorksTable />
 
 			<Link className="btn btn-primary" to="/add-work">Add work</Link>
+			
 		</div>
 	);
 }

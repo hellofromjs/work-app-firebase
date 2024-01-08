@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import * as service from "../../services/services";
+import * as service from "../../services/TimesCrudService";
 
 export default function Work({ work }) {
 	const deleteHandler = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as service from "../../services/services";
+import * as service from "../../services/TimesCrudService";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddWork() {

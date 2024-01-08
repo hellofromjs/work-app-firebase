@@ -1,5 +1,5 @@
 import Work from "../Work/Work";
-import * as service from "../../services/services";
+import * as service from "../../services/TimesCrudService";
 import { useEffect, useState } from "react";
 
 export default function WorksTable() {
@@ -11,7 +11,6 @@ export default function WorksTable() {
 		});
 	}, []);
 
-	console.log(works);
 	return (
 		<table className="table table-bordered table-striped">
 			<thead>
