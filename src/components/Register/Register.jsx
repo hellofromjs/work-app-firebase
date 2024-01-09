@@ -25,8 +25,6 @@ const Register = () => {
         if (user) navigate('/works')
     }, [user, loading])
     
-    
-
     return (
         <div className="container">
             <h2 className="mt-3 text-center">

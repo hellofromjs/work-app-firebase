@@ -36,6 +36,14 @@ const signInWithEmailAndPassword = async (email, password) => {
     }
 }
 
+const sendPasswordReset = async (email) => {
+    try {
+        await auth.sendPasswordResetEmail(email)
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 export default firebase;
 
 export {
@@ -44,4 +52,5 @@ export {
     registerWithEmailAndPassword,
     logout,
     signInWithEmailAndPassword,
+    sendPasswordReset,
 }

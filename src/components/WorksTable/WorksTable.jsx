@@ -1,16 +1,6 @@
 import Work from "../Work/Work";
-import * as service from "../../services/TimesCrudService";
-import { useEffect, useState } from "react";
 
-export default function WorksTable() {
-	const [works, setWorks] = useState([]);
-
-	useEffect(() => {
-		service.getAllWorks((works) => {
-			setWorks(works);
-		});
-	}, []);
-
+export default function WorksTable({works}) {
 	return (
 		<table className="table table-bordered table-striped">
 			<thead>

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import * as service from "../../services/TimesCrudService";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../services/AuthServices";
+
 
 export default function AddWork() {
+	const [user, loading, error] = useAuthState(auth)
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -14,6 +18,7 @@ export default function AddWork() {
 		description: "",
 		from: "",
 		to: "",
+		uid: "",
 	});
 
 	const [errors, setErrors] = useState({
@@ -74,7 +79,7 @@ export default function AddWork() {
 		if (id) {
 			service.updateWork(id, items);
 		} else {
-			service.addWork(items);
+			service.addWork({ ...items, uid: user.id });
 		}
 
 		navigate("/");

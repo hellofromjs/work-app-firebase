@@ -13,8 +13,8 @@ const User = () => {
     useEffect(() => {
         if (loading) return
         if (!user) navigate('/')
-        userServices.getUserData(user, setUserData) 
-    }, [user, loading, userData])
+        userServices.getUserData(user, setUserData)
+    }, [user, loading])
 
     return (
         <>

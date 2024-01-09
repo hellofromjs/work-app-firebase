@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { auth, signInWithEmailAndPassword } from "../../services/AuthServices"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { validateValue } from "../../utilities/validate"
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -13,12 +14,12 @@ const Login = () => {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
+        validateValue(e.target.value)
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(credentials)
 
         await signInWithEmailAndPassword(credentials.email, credentials.password)
     }
@@ -46,6 +47,7 @@ const Login = () => {
                 </div>
                 <div>
                     <p>Neturite paskyros? <Link to="/register">Galite registruotis</Link></p>
+                    <p>Nepavyksta prisijungti? <Link to="/password-reset">Atstatykite slaptazodi</Link></p>
                 </div>
             </form>
         </div>

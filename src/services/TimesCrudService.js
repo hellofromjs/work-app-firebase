@@ -7,10 +7,11 @@ export const addWork = (data) => {
 		.add(data);
 };
 
-export const getAllWorks = (onWorksChanged) => {
+export const getAllWorks = (onWorksChanged, user) => {
 	firebase
 		.firestore()
 		.collection('works')
+		.where('uid', '==', user.uid)
 		.onSnapshot(snapshot => {
 			const newWork = snapshot.docs.map(doc => ({
 				id: doc.id,

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddWork from "../AddWork/AddWork";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import Reset from "../Reset/Reset";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/add-work" element={<AddWork />} />
 					<Route path="/update-work/:id" element={<AddWork />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/password-reset" element={<Reset />} />
 				</Routes>
 			</Router>
 		</div>
