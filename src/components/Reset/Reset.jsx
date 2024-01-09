@@ -1,33 +1,44 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useEffect, useState } from "react"
-import { auth, sendPasswordReset } from "../../services/AuthServices"
+import { sendPasswordReset } from "../../services/AuthServices";
+import useFormValidation from "../../utilities/useFormValidation";
+import FormInput from "../Validation/FormInput";
+import { isEmailValid } from "../../utilities/validate";
 
 const Reset = () => {
-    const [email, setEmail] = useState('')
-    const [user, loading, error] = useAuthState(auth)
+	const [formData, formRef, handleInputValue, isFormValid] =
+		useFormValidation();
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        sendPasswordReset(email)
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		sendPasswordReset(formData.email.value);
+	};
+	return (
+		<div className="container">
+			<h2 className="mt-3 text-center">Atstatykite slaptazodi</h2>
 
-    }
-    return (
-        <div className="container">
-            <h2 className="mt-3 text-center">
-                Atstatykite slaptazodi
-            </h2>
+			<form className="form" onSubmit={handleSubmit} ref={formRef}>
+				<div className="mb-3">
+					<FormInput
+						onChange={handleInputValue}
+						name="email"
+						type="email"
+						className="form-control"
+						placeholder="Jusu emailas"
+						errorMessage="Toks emailas nera leistinas"
+						validation={isEmailValid}
+					/>
+				</div>
+				<div className="mb-3">
+					<button
+						className="btn btn-primary"
+						type="submit"
+						disabled={!isFormValid(formData)}
+					>
+						Siusti
+					</button>
+				</div>
+			</form>
+		</div>
+	);
+};
 
-            <form className="form" onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <input onChange={ (e) => setEmail(e.target.value) } value={email} type="email" className="form-control" placeholder="Jusu emailas" />
-                </div>
-                <div className="mb-3">
-                    <button className="btn btn-primary" type="submit">Siusti</button>
-                </div>
-            </form>
-        </div>
-    )
-}
-
-export default Reset
+export default Reset;
