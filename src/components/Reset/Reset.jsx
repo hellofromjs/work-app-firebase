@@ -1,6 +1,6 @@
 import { sendPasswordReset } from "../../services/AuthServices";
-import useFormValidation from "../../utilities/useFormValidation";
-import FormInput from "../Validation/FormInput";
+import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
+import FormInput from "../../libraries/form-validation/components/FormInput";
 import { isEmailValid } from "../../utilities/validate";
 
 const Reset = () => {
@@ -24,6 +24,7 @@ const Reset = () => {
 						className="form-control"
 						placeholder="Jusu emailas"
 						errorMessage="Toks emailas nera leistinas"
+						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
 				</div>

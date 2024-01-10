@@ -3,23 +3,29 @@ import * as service from "../../services/TimesCrudService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../services/AuthServices";
-import useFormValidation from "../../utilities/useFormValidation";
-import FormInput from "../Validation/FormInput";
-import FormTextarea from "../Validation/FormTextarea";
-import FormSelect from "../Validation/FormSelect";
+import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
+import FormInput from "../../libraries/form-validation/components/FormInput";
+import FormTextarea from "../../libraries/form-validation/components/FormTextarea";
+import FormSelect from "../../libraries/form-validation/components/FormSelect";
 
 export default function AddWork() {
-	const [user, loading, error] = useAuthState(auth);
+	const [user, _loading, _error] = useAuthState(auth);
 	const navigate = useNavigate();
 	const { id } = useParams();
 
-	const [formData, formRef, handleInputValue, isFormValid] =
-		useFormValidation();
+	const [
+		formData,
+		formRef,
+		handleInputValue,
+		isFormValid,
+		formDataFlat,
+		setFormData,
+	] = useFormValidation();
 
 	useEffect(() => {
 		if (id) {
 			service.showById((workData) => {
-				// TODO: set form data here
+				setFormData(workData);
 			}, id);
 		}
 	}, [id]);
@@ -28,9 +34,9 @@ export default function AddWork() {
 		e.preventDefault();
 
 		if (id) {
-			service.updateWork(id, formData);
+			service.updateWork(id, { ...formDataFlat(), uid: user.uid });
 		} else {
-			service.addWork({ ...formData, uid: user.uid });
+			service.addWork({ ...formDataFlat(), uid: user.uid });
 		}
 
 		navigate("/");
@@ -52,6 +58,7 @@ export default function AddWork() {
 								className="form-control"
 								errorMessage="Data turi buti pasirinkta"
 								label="Pasirinkite data"
+								value={formData?.date.value}
 								validation={(value) => {
 									if (value.length > 0) {
 										return true;
@@ -68,6 +75,7 @@ export default function AddWork() {
 								className="form-control"
 								errorMessage="Vardas turi buti tarp 3 ir 12 raidziu"
 								validation={() => true}
+								value={formData?.company.value}
 								options={[
 									{
 										text: "Pasirinkite imone:",
@@ -92,6 +100,7 @@ export default function AddWork() {
 								className="form-control"
 								errorMessage="Vardas turi buti tarp 3 ir 12 raidziu"
 								validation={() => true}
+								value={formData?.service.value}
 								options={[
 									{
 										text: "Pasirinkite darba:",
@@ -118,6 +127,7 @@ export default function AddWork() {
 								placeholder="Darbo aprasymas"
 								errorMessage="Aprasymas turi buti bent 4 simboliai"
 								label="Pasirinkite data"
+								value={formData?.description.value}
 								validation={(value) => {
 									if (value.length >= 4) {
 										return true;
@@ -136,6 +146,7 @@ export default function AddWork() {
 									className="form-control"
 									errorMessage="Turite pasirinkti laika"
 									label="Nuo"
+									value={formData?.from.value}
 									validation={(value) => {
 										if (value.length > 0) {
 											return true;
@@ -153,6 +164,7 @@ export default function AddWork() {
 									className="form-control"
 									errorMessage="Turite pasirinkti laika"
 									label="Iki"
+									value={formData?.to.value}
 									validation={(value) => {
 										if (value.length > 0) {
 											return true;

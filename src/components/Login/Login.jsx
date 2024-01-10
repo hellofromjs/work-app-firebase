@@ -3,14 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, signInWithEmailAndPassword } from "../../services/AuthServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { isEmailValid, isPasswordValid } from "../../utilities/validate";
-import FormInput from "../Validation/FormInput";
-import useFormValidation from "../../utilities/useFormValidation";
+import FormInput from "../../libraries/form-validation/components/FormInput";
+import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
 
 const Login = () => {
 	const [formData, formRef, handleInputValue, isFormValid] =
 		useFormValidation();
 
-	const [user, loading, error] = useAuthState(auth);
+	const [user, loading, _error] = useAuthState(auth);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -40,6 +40,7 @@ const Login = () => {
 						className="form-control"
 						placeholder="Jusu emailas"
 						errorMessage="Toks emailas nera leistinas"
+						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
 				</div>
@@ -51,6 +52,7 @@ const Login = () => {
 						className="form-control"
 						placeholder="Slaptazodis"
 						errorMessage="Slaptazodis turi buti bent 6 simboliai"
+						value={formData?.password.value}
 						validation={isPasswordValid}
 					/>
 				</div>

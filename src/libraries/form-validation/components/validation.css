@@ -1,0 +1,8 @@
+.form-control.border-error {
+	border: 1px solid red;
+}
+
+.text-error {
+	color: red;
+	font-size: 12px;
+}

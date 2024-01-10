@@ -5,15 +5,16 @@ import {
 	auth,
 	registerWithEmailAndPassword,
 } from "../../services/AuthServices";
-import FormInput from "../Validation/FormInput";
+import FormInput from "../../libraries/form-validation/components/FormInput";
 
-import useFormValidation from "../../utilities/useFormValidation";
+import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
 import { isEmailValid, isPasswordValid } from "../../utilities/validate";
 
 const Register = () => {
-	const [formData, formRef, handleInputValue, isFormValid] = useFormValidation();
+	const [formData, formRef, handleInputValue, isFormValid] =
+		useFormValidation();
 
-	const [user, loading, error] = useAuthState(auth);
+	const [user, loading, _error] = useAuthState(auth);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
@@ -44,6 +45,7 @@ const Register = () => {
 						className="form-control"
 						placeholder="Jusu vardas"
 						errorMessage="Vardas turi buti tarp 3 ir 12 raidziu"
+						value={formData?.name.value}
 						validation={(value) => {
 							if (value.length >= 3 && value.length <= 12) {
 								return true;
@@ -60,6 +62,7 @@ const Register = () => {
 						className="form-control"
 						placeholder="Jusu emailas"
 						errorMessage="Toks emailas nera leistinas"
+						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
 				</div>
@@ -71,6 +74,7 @@ const Register = () => {
 						className="form-control"
 						placeholder="Slaptazodis"
 						errorMessage="Slaptazodis turi buti bent 6 simboliai"
+						value={formData?.password.value}
 						validation={isPasswordValid}
 					/>
 				</div>
